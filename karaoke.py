@@ -360,9 +360,10 @@ class Karaoke:
     def play_file(self, file_path, semitones=0):
         logging.info(f"Playing file: {file_path} transposed {semitones} semitones")
         stream_uid = int(time.time())
-        stream_url = f"{self.url_parsed.scheme}://{self.url_parsed.hostname}:{self.ffmpeg_port}/{stream_uid}"
         # pass a 0.0.0.0 IP to ffmpeg which will work for both hostnames and direct IP access
         ffmpeg_url = f"http://0.0.0.0:{self.ffmpeg_port}/{stream_uid}"
+        # Use the same path for stream URL so the local machine can pick up the stream.
+        stream_url= ffmpeg_url
 
         pitch = 2**(semitones/12) #The pitch value is (2^x/12), where x represents the number of semitones
 
