@@ -529,7 +529,8 @@ def delayed_halt(cmd):
     cherrypy.engine.exit()
     k.stop()
     if cmd == 0:
-        sys.exit()
+        # The app will quit itself when karaoke is stopped.
+        pass
     if cmd == 1:
         os.system("shutdown now")
     if cmd == 2:
@@ -863,7 +864,7 @@ if __name__ == "__main__":
         # Use chromium so that the binary versions will more likely match
         options._binary_location = "/usr/bin/chromium-browser"
         driver = webdriver.Chrome(service=service, options=options)
-        driver.get(f"{k.url}/splash" )
+        driver.get(f"http://{k.ip}:{k.port}/splash" )
         driver.add_cookie({'name': 'user', 'value': 'PiKaraoke-Host'})
         # Clicking this counts as an interaction, which will allow the browser to autoplay audio
         wait = WebDriverWait(driver, 60)
@@ -875,7 +876,7 @@ if __name__ == "__main__":
 
     # Close running processes when done
     if not args.hide_splash_screen:
-        driver.close()
+        driver.quit()
     cherrypy.engine.exit()
 
     sys.exit()
