@@ -860,6 +860,8 @@ if __name__ == "__main__":
         options.add_argument("--kiosk")
         options.add_argument("--start-maximized")
         options.add_experimental_option("excludeSwitches", ['enable-automation'])
+        # Use chromium so that the binary versions will more likely match
+        options._binary_location = "/usr/bin/chromium-browser"
         driver = webdriver.Chrome(service=service, options=options)
         driver.get(f"{k.url}/splash" )
         driver.add_cookie({'name': 'user', 'value': 'PiKaraoke-Host'})
